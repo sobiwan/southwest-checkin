@@ -1,11 +1,14 @@
+/// ACTIVE TODOS ////
+// TODO: Need to attempt Login several times - clocks don't match
+// TODO: Use Southwest's server's time instead of the client's clock.
+// TODO: Test select passenger page. 
+
+
 /////////////  CHECK IN PAGE  ////////////////
 
 var globalSubmitDate;
 var allDone = false;
 
-/**
- * @brief Submit the check in form on the Southwest Check In Online page.
- */
 function submitNow()
 {
     try{
@@ -18,11 +21,7 @@ function submitNow()
 }
 
 
-/**
- * @brief Display the countdown.
- *
- * TODO: Some formatting is wrong eg ("1:0:12" means 1 hour and 12 seconds remain). Make sure everything is represented with 2 digits.
- */
+/**DISPLAY COUNTDOWN.**/
 function displayCountdown()
 {
     try{
@@ -76,9 +75,7 @@ function displayCountdown()
 }
 
 
-/**
- * @brief Updates the countdown every second.
- */
+/** UPDATE COUNTDOWN EVERY SECOND **/
 function displayCountdownWrapper()
 {
     try{
@@ -90,9 +87,7 @@ function displayCountdownWrapper()
 }
 
 
-/**
- * @brief Begins the delay at the next even second.
- */
+/** BEGINS DELAY EVERY SECOND **/
 function beginDelay()
 {
     try{
@@ -108,10 +103,6 @@ function beginDelay()
         var minute = document.getElementById("minute-input").value;
         var second = document.getElementById("second-input").value;
 
-//        var phoneArea = document.getElementById("phoneArea").value;
-//        var phonePrefix = document.getElementById("phonePrefix").value;
-//        var phoneNumber = document.getElementById("phoneNumber").value;
-
         if(confNumber === "" || firstName === "" || lastName === "" ){
             alert("Must fill out Confirmation Number and Name.");
         }
@@ -121,16 +112,7 @@ function beginDelay()
         }
         else if(year.length < 4 ){
             alert("Year must be 4 characters.");
-        }
-//        else if (phoneArea.search(/\d\d\d/g) == -1 || phonePrefix.search(/\d\d\d/g) == -1 || phoneNumber.search(/\d\d\d\d/g) == -1) {
-//            alert("Invalid phone number provided.");
-//        }
-        else{
-//            //save the text number for later
-//            GM_setValue("phoneArea", phoneArea);
-//            GM_setValue("phonePrefix", phonePrefix);
-//            GM_setValue("phoneNumber", phoneNumber);
-
+        } else{
             //Build a date
             var submitDate = new Date();
             //submitDate.setMonth(month - 1);
@@ -165,11 +147,8 @@ function beginDelay()
     }
 }
 
-/**
- * @brief Edits the check in page; Adds Date, time, and Auto Check In button
- *
- * TODO Error handling. (Auto notify the developer when southwest page changes)
- */
+/** EDIT CHECKIN PAGE: Adds Date, time, and Auto Check In button **/
+/* TODO Error handling. (Auto notify the user when southwest page changes)*/
 function checkInPageFormEdit()
 {
     try{
@@ -276,47 +255,6 @@ function checkInPageFormEdit()
 
         delayDiv.appendChild(dateSelect);
 
-        //auto-text boarding pass section
-//        var autoTextArea = document.createElement("div");
-//        var textLabel = document.createElement("label");
-//        textLabel.innerHTML = "<span class=\"required\">*</span> Boarding pass text number: ";
-//
-//        var phoneArea = document.createElement("input");
-//        phoneArea.setAttribute('id','phoneArea');
-//        phoneArea.setAttribute('type','text');
-//        phoneArea.setAttribute('maxlength','3');
-//        phoneArea.setAttribute('size','3');
-//        phoneArea.setAttribute('value', GM_getValue("phoneArea") !== undefined ? GM_getValue("phoneArea") : '');
-//        phoneArea.setAttribute('tabindex','12');
-//
-//        var phonePrefix = document.createElement("input");
-//        phonePrefix.setAttribute('id','phonePrefix');
-//        phonePrefix.setAttribute('type','text');
-//        phonePrefix.setAttribute('maxlength','3');
-//        phonePrefix.setAttribute('size','3');
-//        phonePrefix.setAttribute('value', GM_getValue("phonePrefix") !== undefined ? GM_getValue("phonePrefix") : '');
-//        phonePrefix.setAttribute('tabindex','13');
-//
-//        var phoneNumber = document.createElement("input");
-//        phoneNumber.setAttribute('id','phoneNumber');
-//        phoneNumber.setAttribute('type','text');
-//        phoneNumber.setAttribute('maxlength','4');
-//        phoneNumber.setAttribute('size','4');
-//        phoneNumber.setAttribute('value', GM_getValue("phoneNumber") !== undefined ? GM_getValue("phoneNumber") : '');
-//        phoneNumber.setAttribute('tabindex','14');
-//
-//        autoTextArea.innerHTML += "<br/>";
-//
-//        autoTextArea.appendChild(textLabel);
-//        autoTextArea.innerHTML += "(";
-//        autoTextArea.appendChild(phoneArea);
-//        autoTextArea.innerHTML += ")";
-//        autoTextArea.appendChild(phonePrefix);
-//        autoTextArea.innerHTML += "-";
-//        autoTextArea.appendChild(phoneNumber);
-//
-//        delayDiv.appendChild(autoTextArea);
-//
         delayDiv.innerHTML += "<br/><br />";
 
         // The area that displays how much time remains before the form is submitted.
@@ -377,45 +315,6 @@ function autoPassengerPage()
 
 /////////////  BOARDING DOC DELIVERY PAGE  ////////////////
 
-//function autoTextBoardingDocs()
-//{
-//    try{
-//        //find error notification
-//        if (document.title == "Error")
-//            return;
-//
-//        //click the Text button
-//        var button = document.getElementsByClassName("actionable actionable_button actionable_full-width actionable_large-button actionable_no-outline actionable_prefix actionable_secondary-dark-affix button boarding-pass-options--button-text")[0];
-//        button.click();
-//        window.setTimeout(waitForSendButton, 500);
-//    }
-//    catch(e){
-//        alert('autoTextBoardingDocs: An error has occurred: '+ e.message);
-//    }
-//}
-//
-//function waitForTextBoardingPass() {
-//    if(document.getElementById("textBoardingPass") === null) {
-//       window.setTimeout(waitForTextBoardingPass, 100);
-//    } else {
-//        document.getElementById("textBoardingPass").focus();
-//        document.getElementById("textBoardingPass").value = parseInt(GM_getValue("phoneArea") + GM_getValue("phonePrefix") + GM_getValue("phoneNumber"));
-//        waitForSendButton();
-//    }
-//}
-//
-//function waitForSendButton() {
-//    if(document.getElementById("form-mixin--submit-button") === null || document.getElementById("textBoardingPass").value != GM_getValue("phoneArea") + GM_getValue("phonePrefix") + GM_getValue("phoneNumber")) {
-//        document.getElementById("textBoardingPass").focus();
-//        document.getElementById("textBoardingPass").value = parseInt(GM_getValue("phoneArea") + GM_getValue("phonePrefix") + GM_getValue("phoneNumber"));
-//        window.setTimeout(waitForSendButton, 100);
-//    } else {
-//        //document.getElementById("form-mixin--submit-button").focus();
-//        //document.getElementById("form-mixin--submit-button").click();
-//        allDone = true;
-//    }
-//}
-
 //case of the select boarding pass page (regex match the url)
 if(/review/.test(document.location.href))
 {
@@ -426,7 +325,5 @@ else if(/index/.test(document.location.href))
 {
     checkInPageFormEdit();
 }
-//else if(/confirmation/.test(document.location.href))
-//{
-//    autoTextBoardingDocs();
-//}
+
+
